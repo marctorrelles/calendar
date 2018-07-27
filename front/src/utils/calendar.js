@@ -1,21 +1,20 @@
 import moment from 'moment';
-import Calendar from "../components/calendar";
-
 
 export function makeCalendar(currentMonth) {
 
     let posFirst = currentMonth.startOf('month').day();
     let posLast = currentMonth.endOf('month').day();
-    let startDate = currentMonth.format("YYYY-MM-01");
-    let endDate = currentMonth.format("YYYY-MM-") + currentMonth.daysInMonth();
+    let startDate = currentMonth.format('YYYY-MM-01');
+    let endDate = currentMonth.format('YYYY-MM-') + currentMonth.daysInMonth();
 
     let calendar = [];
 
     while (posFirst > 0) {
-        const day = currentMonth.clone().startOf('month').subtract(posFirst,"days");
+        const day = currentMonth.clone().startOf('month').subtract(posFirst,'days');
         calendar.push({
             day: day.date(),
             dayOfTheWeek: day.day(),
+            date: day.toISOString(),
             isActualMonth: false
         });
         posFirst--;
@@ -25,16 +24,18 @@ export function makeCalendar(currentMonth) {
         calendar.push({
             day: day.date(),
             dayOfTheWeek: day.day(),
+            date: day.toISOString(),
             isActualMonth: true
         });
-        startDate = day.add(1, "days").format("YYYY-MM-DD");
+        startDate = day.add(1, 'days').format('YYYY-MM-DD');
     }
     let counter = 1;
     while (posLast < 6) {
-        const day = currentMonth.clone().endOf('month').add(counter,"days");
+        const day = currentMonth.clone().endOf('month').add(counter,'days');
         calendar.push({
             day: day.date(),
             dayOfTheWeek: day.day(),
+            date: day.toISOString(),
             isActualMonth: false
         });
         counter++;

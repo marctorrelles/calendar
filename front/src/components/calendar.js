@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import moment from 'moment';
 
-import { makeCalendar } from "../utils/calendar";
+import { makeCalendar } from '../utils/calendar';
 
 class Calendar extends Component {
 
@@ -24,15 +24,14 @@ class Calendar extends Component {
     }
 
     handleMonthChange(nextMonth = true) {
-        console.log("click")
         const MONTH = this.state.currentMonth;
         nextMonth ?
-            this.setState({
-                currentMonth: MONTH.month(MONTH.month() + 1)
-            }) :
-            this.setState({
-                currentMonth: MONTH.month(MONTH.month() - 1)
-            })
+        this.setState({
+            currentMonth: MONTH.month(MONTH.month() + 1)
+        }) :
+        this.setState({
+            currentMonth: MONTH.month(MONTH.month() - 1)
+        })
         this.setState({ calendar: makeCalendar(this.state.currentMonth) });
     }
 
@@ -41,13 +40,13 @@ class Calendar extends Component {
         const MONTH = this.state.currentMonth;
 
         return (
-            <Row className="calendar-navigator">
-                <div className="month-name">
-                    <span className="align-middle">
+            <Row className='calendar-navigator'>
+                <div className='month-name'>
+                    <span className='align-middle'>
                         {monthNames[MONTH.month()]} {MONTH.year()}
                     </span>
                 </div>
-                <div className="arrows">
+                <div className='arrows'>
                     <Button onClick={() => this.handleMonthChange(false)}>&lt;</Button>
                     <Button onClick={() => this.handleMonthChange(true)}>&gt;</Button>
                 </div>
@@ -64,19 +63,19 @@ class Calendar extends Component {
         });
         return (
             <div>
-                <div className="hidden-xs">
+                <div className='hidden-xs'>
                     {weekdays.map( weekday => {
                         return(
-                            <Col className="calendar-col">
+                            <Col className='calendar-col'>
                                 <span>{weekday}</span>
                             </Col>
                         )
                     })}
                 </div>
-                <div className="hidden-lg hidden-md hidden-sm">
+                <div className='hidden-lg hidden-md hidden-sm'>
                     {weekdaysShort.map( weekday => {
                         return(
-                            <Col className="calendar-col">
+                            <Col className='calendar-col'>
                                 <span>{weekday}</span>
                             </Col>
                         )
@@ -86,12 +85,38 @@ class Calendar extends Component {
         )
     }
 
+    renderCalendarDays() {
+        return(
+            <div>
+                {this.state.calendar.map( day => {
+                    if (day.isActualMonth) {
+                        console.log(day)
+                        return (
+                            <Col className='calendar-col'>
+                                <span>{day.day}</span>
+                            </Col>
+                        )
+                    }
+                    return (
+                        <Col className='calendar-col'>
+                            <span className='text-muted'>{day.day}</span>
+                        </Col>
+                    )
+
+                })}
+            </div>
+        )
+    }
+
     render() {
         return (
-            <Grid className="calendar-container">
+            <Grid className='calendar-container'>
                 {this.renderNavigator()}
-                <Row className="calendar-week-names text-left">
+                <Row className='calendar-week-names text-left'>
                     {this.renderWeekDays()}
+                </Row>
+                <Row className='calendar-days text-left'>
+                    {this.renderCalendarDays()}
                 </Row>
             </Grid>
         )

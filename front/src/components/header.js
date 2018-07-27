@@ -1,7 +1,6 @@
 import React, { Component }  from 'react';
 import {Col, Nav} from 'react-bootstrap';
 import logo from '../img/logo.png';
-import Calendar from "./calendar";
 
 class Header extends Component {
 
