@@ -22,8 +22,8 @@ class Navigator extends Component {
                     <span className="align-middle">{monthNames[NOW.getMonth()]} {NOW.getFullYear()}</span>
                 </div>
                 <div className="arrows">
-                    <Button className="pull-left">&larr;</Button>
-                    <Button className="pull-right">&rarr;</Button>
+                    <Button className="pull-left">&lt;</Button>
+                    <Button className="pull-right">&gt;</Button>
                 </div>
             </Row>
         )
