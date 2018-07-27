@@ -2,6 +2,8 @@ import React, { Component }  from 'react';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import moment from 'moment';
 
+import { makeCalendar } from "../utils/calendar";
+
 class Calendar extends Component {
 
     constructor(props) {
@@ -9,25 +11,33 @@ class Calendar extends Component {
         this.state = {
             currentMonth: moment(),
             currentDay: moment(),
+            calendar: [],
             events: []
         }
+    }
+
+    componentWillMount() {
+        this.setState({ calendar: makeCalendar(this.state.currentMonth) });
+    }
+
+    componentDidUpdate() {
     }
 
     handleMonthChange(nextMonth = true) {
         console.log("click")
         const MONTH = this.state.currentMonth;
         nextMonth ?
-        this.setState({
-            currentMonth: MONTH.month(MONTH.month() + 1)
-        }) :
-        this.setState({
-            currentMonth: MONTH.month(MONTH.month() - 1)
-        })
+            this.setState({
+                currentMonth: MONTH.month(MONTH.month() + 1)
+            }) :
+            this.setState({
+                currentMonth: MONTH.month(MONTH.month() - 1)
+            })
+        this.setState({ calendar: makeCalendar(this.state.currentMonth) });
     }
 
     renderNavigator() {
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"];
+        const monthNames = moment.months();
         const MONTH = this.state.currentMonth;
 
         return (
@@ -46,36 +56,32 @@ class Calendar extends Component {
     }
 
     renderWeekDays() {
+        const weekdays = Array.apply(null, Array(7)).map(function (_, i) {
+            return moment(i, 'e').startOf('week').isoWeekday(i + 1).format('dddd');
+        });
+        const weekdaysShort = Array.apply(null, Array(7)).map(function (_, i) {
+            return moment(i, 'e').startOf('week').isoWeekday(i + 1).format('ddd');
+        });
         return (
             <div>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Monday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">Mo</span>
-                </Col>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Tuesday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">Tu</span>
-                </Col>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Wednesday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">We</span>
-                </Col>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Thursday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">Th</span>
-                </Col>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Friday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">Fr</span>
-                </Col>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Saturday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">Sa</span>
-                </Col>
-                <Col className="calendar-col">
-                    <span className="hidden-xs">Sunday</span>
-                    <span className="hidden-lg hidden-md hidden-sm">Su</span>
-                </Col>
+                <div className="hidden-xs">
+                    {weekdays.map( weekday => {
+                        return(
+                            <Col className="calendar-col">
+                                <span>{weekday}</span>
+                            </Col>
+                        )
+                    })}
+                </div>
+                <div className="hidden-lg hidden-md hidden-sm">
+                    {weekdaysShort.map( weekday => {
+                        return(
+                            <Col className="calendar-col">
+                                <span>{weekday}</span>
+                            </Col>
+                        )
+                    })}
+                </div>
             </div>
         )
     }
