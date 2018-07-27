@@ -46,11 +46,15 @@ body {
 
 /*** Calendar navigator css ***/
 
+/* Absolute in normal mode, relative in responsive */
 .calendar-navigator {
     padding: 1rem;
     color: #222;
     width: fit-content;
     float: right;
+    position: absolute;
+    top: 20px;
+    right: 30px;
 }
 
 .calendar-navigator .month-name {
