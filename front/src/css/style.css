@@ -1,35 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: "Roboto", sans-serif;
+    color: #222;
 }
 
-/*** Default App CSS ***/
-.App {
-    text-align: center;
+/*** Navbar CSS ***/
+
+.navbar-logo {
+    height: 50px;
+    float: left;
+    margin-right: 2rem;
 }
 
-.App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
-}
-
-.App-header {
-    background-color: #222;
-    height: 150px;
+.navbar {
+    background-color: #F4F5F9;
     padding: 20px;
-    color: white;
+    color: #838b92;
 }
 
-.App-title {
+.navbar-slogan {
+    float: left;
+}
+
+.navbar-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-top: 16px;
+}
+
+.navbar-subtitle {
+    position: relative;
+    display: block;
+    margin-top: -5px;
+    margin-bottom: 0;
+}
+
+/*** Calendar navigator css ***/
+
+.calendar-navigator {
+    padding: 1rem;
+    color: #222;
+    width: fit-content;
+    float: right;
+}
+
+.calendar-navigator .month-name {
     font-size: 1.5em;
+    float: left;
 }
 
-.App-intro {
-    font-size: large;
+.calendar-navigator .arrows {
+    float: left;
+    margin-left: 10px;
 }
 
-@keyframes App-logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+/*** Calendar css ***/
+
+.calendar-container {
+    padding: 3rem;
+}
+
+.calendar-col {
+    width: calc(100% / 7);
+    float: left;
+    border: 1px solid #eee;
+    padding: 0.2rem;
+}
+
+.calendar-week-names {
+    font-size: 0.9em;
+}
+
+.calendar-week-names .calendar-col {
+    font-color: #888;
+    border-bottom: 0;
 }
