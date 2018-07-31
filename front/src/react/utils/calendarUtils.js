@@ -54,3 +54,26 @@ function createCalendarObject(day, isActualMonth, calendar) {
         events: []
     }
 }
+
+export function handleDateTime(field, event, dateTime) {
+    if (field === "startDate")
+        return handleDate(event.start, dateTime);
+    else if (field === "endDate")
+        return handleDate(event.end, dateTime);
+    else if (field === "startTime")
+        return handleTime(event.start, dateTime);
+    else if (field === "endTime")
+        return handleTime(event.end, dateTime);
+}
+
+function handleDate(oldDateTime, dateTime) {
+    const datetime = oldDateTime ? oldDateTime : moment().hour(0).minutes(0);
+
+    const momentDate = moment(dateTime + ' ' + moment(datetime).format('HH:mm'));
+    return momentDate.isValid() ? momentDate.toISOString() : false;
+}
+
+function handleTime(oldDateTime, dateTime) {
+    const momentDate = moment(moment(oldDateTime).format('YYYY-MM-DD') + ' ' + dateTime);
+    return momentDate.isValid() ? momentDate.toISOString() : false;
+}
