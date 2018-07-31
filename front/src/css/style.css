@@ -104,14 +104,27 @@ body {
 }
 
 .calendar-week-names .calendar-col {
-    font-color: #888;
+    color: #888;
     border-bottom: 0;
     padding-bottom: 0em;
 }
 
 .calendar-days .calendar-col {
     font-size: 1.1em;
-    font-color: #000;
+    color: #000;
     border-top: 0;
-    min-height: 100px;
+}
+
+.event-col {
+    height: 100px;
+    overflow-y: auto;
+}
+
+.event-row {
+    color: white;
+    background-color: #53b536;
+    border-radius: 2px;
+    margin: 0.2rem 0;
+    padding: 0.1rem 0.2rem;
+    font-size: 0.8em;
 }

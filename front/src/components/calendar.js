@@ -12,12 +12,28 @@ class Calendar extends Component {
             currentMonth: moment(),
             currentDay: moment(),
             calendar: [],
-            events: []
+            events: [{
+                id: 3,
+                title: "I'm an event",
+                description: "This is my description",
+                start: "2018-07-26T12:00:00.000Z",
+                end: "2018-07-26T14:00:00.000Z",
+                created_at: "2018-07-26T14:48:54.649Z",
+                updated_at: "2018-07-26T14:48:54.649Z"
+            }, {
+                id: 3,
+                title: "I'm an event",
+                description: "This is my description",
+                start: "2018-07-26T12:00:00.000Z",
+                end: "2018-07-26T14:00:00.000Z",
+                created_at: "2018-07-26T14:48:54.649Z",
+                updated_at: "2018-07-26T14:48:54.649Z"
+            }]
         }
     }
 
     componentWillMount() {
-        this.setState({ calendar: makeCalendar(this.state.currentMonth) });
+        this.setState({ calendar: makeCalendar(this.state.currentMonth, this.state.events) });
     }
 
     componentDidUpdate() {
@@ -32,7 +48,7 @@ class Calendar extends Component {
         this.setState({
             currentMonth: MONTH.month(MONTH.month() - 1)
         })
-        this.setState({ calendar: makeCalendar(this.state.currentMonth) });
+        this.setState({ calendar: makeCalendar(this.state.currentMonth, this.state.events) });
     }
 
     renderNavigator() {
@@ -89,20 +105,23 @@ class Calendar extends Component {
         return(
             <div>
                 {this.state.calendar.map( day => {
-                    if (day.isActualMonth) {
-                        console.log(day)
-                        return (
-                            <Col className='calendar-col'>
-                                <span>{day.day}</span>
-                            </Col>
-                        )
-                    }
                     return (
                         <Col className='calendar-col'>
-                            <span className='text-muted'>{day.day}</span>
+                            <span
+                                className={!day.isActualMonth ? "text-muted" : ""}
+                                itemID={day.date}>
+                                {day.dayOfTheMonth}
+                                {day.isFirst ? ` ${day.day.format('MMM')}` : ``}
+                            </span>
+                            <Col className="event-col">
+                                {day.events.map(event => {
+                                    return (
+                                        <Row className="event-row">{moment(event.start).format("HH:mm")} {event.title}</Row>
+                                    )
+                                })}
+                            </Col>
                         </Col>
                     )
-
                 })}
             </div>
         )
