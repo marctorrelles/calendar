@@ -126,19 +126,33 @@ label {
     border-top: 0;
 }
 
-.calendar-day {
+.calendar-day, .calendar-month {
     height: 2.2rem;
     font-size: 1.05em;
     padding-left: 0.1em;
     display: block;
+    float: left;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
+.calendar-day.today {
+    color: #fff;
+    background-color: #53b536;
+    padding: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-top: -0.2rem;
+    text-align: center;
+    border-radius: 50%;
+}
+
 .event-col {
-    height: 100px;
+    width: 100%;
+    float: left;
     overflow-y: auto;
+    height: 100px;
 }
 
 .event-row {

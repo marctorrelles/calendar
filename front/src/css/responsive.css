@@ -41,10 +41,14 @@
         font-size: 1.5em;
         line-height: 25px;
     }
-    .calendar-day {
+    .calendar-day, .calendar-month {
         height: 1.8rem;
         font-size: 0.95em;
         padding-left: 0;
+    }
+    .calendar-day.today {
+        width: 2rem;
+        height: 2rem;
     }
     .navbar {
         padding: 10px;

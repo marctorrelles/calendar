@@ -155,16 +155,28 @@ class Calendar extends Component {
         return(
             <div>
                 {this.state.calendar.map( day => {
+                    let classNameDay = !day.isActualMonth ?
+                        "text-muted calendar-day" : "calendar-day"
+                    classNameDay += day.isToday ? " today" : "";
+                    const classNameMonth = !day.isActualMonth ?
+                        "text-muted calendar-month hidden-xs" :
+                        "calendar-month hidden-xs";
                     return (
                         <Col
                             className='calendar-col'
                             key={day.date}>
                             <span
-                                className={!day.isActualMonth ? "text-muted calendar-day" : "calendar-day"}
+                                className={classNameDay}
                                 itemID={day.date}>
                                 {day.dayOfTheMonth}
-                                {day.isFirst ? ` ${day.day.format('MMM')}` : ``}
                             </span>
+                            {day.isFirst ?
+                                <span
+                                    className={classNameMonth}>
+                                    &nbsp;{day.day.format('MMM')}
+                                </span>
+                                : ""
+                            }
                             <Col className="event-col">
                                 {day.events.map(event => {
                                     return (

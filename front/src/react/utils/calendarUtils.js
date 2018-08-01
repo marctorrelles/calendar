@@ -2,28 +2,33 @@ import moment from 'moment';
 
 export function makeCalendar(currentMonth, events) {
 
-    let posFirst = currentMonth.startOf('month').day();
-    let posLast = currentMonth.endOf('month').day();
+    let posFirst = roundWeekDay(currentMonth.startOf('month').day() -1);
+    let posLast = roundWeekDay(currentMonth.endOf('month').day() -1);
     let startDate = currentMonth.format('YYYY-MM-01');
     let endDate = currentMonth.format('YYYY-MM-') + currentMonth.daysInMonth();
 
     let calendar = [];
 
     // Create days
+    // NOTE: First day of week (pos 0) is Sunday, but as we want the week to start on monday we must compare it to 1
     while (posFirst > 0) {
         const day = currentMonth.clone().startOf('month').subtract(posFirst,'days');
-        calendar.push(createCalendarObject(day, false, calendar));
+        const isToday = day.clone().format('YYYY-MM-DD') === moment().format('YYYY-MM-DD');
+        calendar.push(createCalendarObject(day, false, isToday, calendar));
         posFirst--;
     }
     while (startDate <= endDate) {
         const day = moment(startDate);
-        calendar.push(createCalendarObject(day, true, calendar));
+        const isToday = day.clone().format('YYYY-MM-DD') === moment().format('YYYY-MM-DD');
+        calendar.push(createCalendarObject(day, true, isToday, calendar));
         startDate = day.add(1, 'days').format('YYYY-MM-DD');
     }
+    // NOTE: We must compare it to 7, same reason than before
     let counter = 1;
     while (posLast < 6) {
         const day = currentMonth.clone().endOf('month').add(counter,'days');
-        calendar.push(createCalendarObject(day, false, calendar));
+        const isToday = day.clone().format('YYYY-MM-DD') === moment().format('YYYY-MM-DD');
+        calendar.push(createCalendarObject(day, false, isToday, calendar));
         counter++;
         posLast++;
     }
@@ -38,11 +43,16 @@ export function makeCalendar(currentMonth, events) {
         });
     });
 
+    console.log(calendar)
     return calendar;
 
 }
 
-function createCalendarObject(day, isActualMonth, calendar) {
+function roundWeekDay(weekDay) {
+    return weekDay < 0 ? 6 : weekDay;
+}
+
+function createCalendarObject(day, isActualMonth, isToday, calendar) {
     const isFirst = ((day.date() === 1) || !calendar.length);
     return {
         day: day,
@@ -51,6 +61,7 @@ function createCalendarObject(day, isActualMonth, calendar) {
         date: day.format("DD/MM/YYYY"),
         isFirst: isFirst,
         isActualMonth: isActualMonth,
+        isToday: isToday,
         events: []
     }
 }
