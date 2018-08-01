@@ -16,6 +16,11 @@ label {
     outline: transparent;
 }
 
+/*** Applying some material style ***/
+.form-control, .modal-content, .btn {
+    border-radius: 0;
+}
+
 /*** Navbar CSS ***/
 
 .navbar-logo {
@@ -179,6 +184,7 @@ label {
     width: 50%;
     float: left;
 }
+
 .col-time{
     width: calc(50% - 20px);
     margin-left: 20px;
@@ -187,10 +193,19 @@ label {
 
 .create-event-modal {
     background-color: #53b536;
+    border-color: #46982d;
     color: white;
 }
 
 .create-event-modal:hover, .create-event-modal:focus {
     background-color: #43912c;
+    border-color: #46982d;
     color: white;
+}
+
+button.close {
+    font-size: 25px;
+    font-weight: 500;
+    opacity: 1;
+    padding: 0 4px;
 }

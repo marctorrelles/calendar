@@ -2,9 +2,11 @@
 
 }
 @media (max-width: 992px) {
-
+    .calendar-container {
+        width: calc(100% - 80px);
+    }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .navbar {
         margin-bottom: 0;
         padding: 15px;
@@ -13,6 +15,7 @@
         background-color: transparent;
         margin-top: 0;
         margin-bottom: 0;
+        width: 100%;
     }
     .calendar-navigator {
         position: relative;
@@ -23,15 +26,68 @@
     }
     .calendar-navigator .month-name {
         margin-left: 10px;
+        font-size: 1.2em;
+        line-height: 30px;
     }
     .calendar-navigator .arrows {
         float: right;
         right: -20px;
         position: relative;
     }
+    .calendar-navigator .arrows button {
+        width: 30px;
+        height: 30px;
+        margin-top: 0px;
+        font-size: 1.5em;
+        line-height: 25px;
+    }
     .calendar-day {
         height: 1.8rem;
         font-size: 0.95em;
         padding-left: 0;
+    }
+    .navbar {
+        padding: 10px;
+    }
+    .navbar-logo {
+        height: 42px;
+    }
+    .navbar-title {
+        font-size: 1.2em;
+        margin-top: 8px;
+    }
+    .navbar-subtitle {
+        margin-top: -5px;
+        font-size: 0.75em;
+    }
+    .event-row {
+        font-size: 0.6em;
+        line-height: 1.2em;
+        height: 1.4rem;
+    }
+}
+
+@media (max-height: 992px) {
+    .event-col {
+        height: 90px;
+    }
+}
+@media (max-height: 768px) {
+    .calendar-day {
+        height: 1.8rem;
+        font-size: 0.88em;
+    }
+    .event-col {
+        height: 80px;
+    }
+}
+@media (max-height: 640px) {
+    .event-col {
+        height: 60px;
+    }
+    .event-row {
+        font-size: 0.6em;
+        line-height: 1.2em;
+        height: 1.4rem;
     }
 }
