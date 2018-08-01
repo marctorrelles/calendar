@@ -43,7 +43,6 @@ export function makeCalendar(currentMonth, events) {
         });
     });
 
-    console.log(calendar)
     return calendar;
 
 }

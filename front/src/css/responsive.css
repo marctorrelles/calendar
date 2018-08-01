@@ -77,9 +77,13 @@
     }
 }
 @media (max-height: 768px) {
-    .calendar-day {
+    .calendar-day, .calendar-month {
         height: 1.8rem;
         font-size: 0.88em;
+    }
+    .calendar-day.today {
+        width: 2rem;
+        height: 2rem;
     }
     .event-col {
         height: 80px;

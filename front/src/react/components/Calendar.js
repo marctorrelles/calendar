@@ -2,14 +2,18 @@ import React, { Component }  from 'react';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import moment from 'moment';
 
-import { makeCalendar, handleDateTime } from '../utils/calendarUtils';
+import { makeCalendar, handleDateTime } from '../utils/CalendarUtils';
 import Event from "./Event";
+
+import EventActions from '../actions/EventActions';
+import EventStore from '../stores/EventStore';
 
 class Calendar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             currentMonth: moment(),
             currentDay: moment(),
             calendar: [],
@@ -40,6 +44,8 @@ class Calendar extends Component {
             }
         };
 
+        this.eventStore = null;
+
         this.handleMonthChange = this.handleMonthChange.bind(this);
         this.handleTriggerModalEvent = this.handleTriggerModalEvent.bind(this);
         this.handleShowEvent = this.handleShowEvent.bind(this);
@@ -51,9 +57,25 @@ class Calendar extends Component {
 
     componentWillMount() {
         this.setState({ calendar: makeCalendar(this.state.currentMonth, this.state.events) });
+        EventActions.get();
+    }
+
+    componentDidMount() {
+        //  || (this.state.pause === false && this.state.deleted === false && this.state.gotoEdit === null);
+        if (!this.eventStore) {
+            this.eventStore = EventStore.listen((value, key) => {
+                const state = {};
+                state[key] = value;
+                this.setState(state);
+            });
+        }
     }
 
     componentDidUpdate() {
+    }
+
+    componentWillUnmount() {
+        this.eventStore();
     }
 
     handleMonthChange(nextMonth = true) {
