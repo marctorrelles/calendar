@@ -92,7 +92,7 @@ class Calendar extends Component {
     }
 
     handleShowEvent(id) {
-        const event = Object.create((this.state.events.filter(event => event.id === id))[0]);
+        const event = { ...(this.state.events.filter(event => event.id === id))[0] };
         this.setState({ event: event });
         this.setState({ showModalEvent: true });
     }
