@@ -82,10 +82,10 @@ class Calendar extends Component {
         if (this.state.event !== null && this.state.showModalEvent) {
             setTimeout(() => this.setState({ event: {
                 id: undefined,
-                title: undefined,
-                description: undefined,
-                start: undefined,
-                end: undefined
+                title: "",
+                description: "",
+                start: "",
+                end: ""
             } }), 500);
         }
         this.setState({ showModalEvent: !this.state.showModalEvent });
@@ -104,6 +104,8 @@ class Calendar extends Component {
             value = handleDateTime(field, event, e.target.value);
             if (value)
                 event[field.replace("Date","").replace("Time","")] = value;
+            if (value && event.start.length && (event.end === "" || !event.end))
+                event["end"] = event["start"];
         }
         else {
             event[field] = e.target.value;
