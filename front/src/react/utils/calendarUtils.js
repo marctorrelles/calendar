@@ -33,6 +33,9 @@ export function makeCalendar(currentMonth, events) {
         posLast++;
     }
 
+    // Order events
+    events.sort((a, b) => a.start - b.start)
+
     // Put events
     events.forEach( event => {
         const startDate = moment(event.start).format("DD/MM/YYYY");
@@ -86,4 +89,20 @@ function handleDate(oldDateTime, dateTime) {
 function handleTime(oldDateTime, dateTime) {
     const momentDate = moment(moment(oldDateTime).format('YYYY-MM-DD') + ' ' + dateTime);
     return momentDate.isValid() ? momentDate.toISOString() : false;
+}
+
+export function checkEventParams(event) {
+    // Check that event is at state
+    if (!event && event.title)
+        return "State error";
+    // Check date
+    if (event.start && moment(event.start) > moment(event.end))
+        return "Start date must be before end date";
+    // Check lengths
+    if (event.title && event.title.length === 0)
+        return "Please introduce a title";
+    if (event.title && event.description.length === 0)
+        return "Please introduce a description";
+
+    return true;
 }

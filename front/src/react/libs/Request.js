@@ -2,12 +2,11 @@ class Request {
     constructor(base_url) {
         this.base_url = base_url;
         this.headers = {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         };
     }
     async put(url, data, extra_headers = {}) {
-        const headers = Object.assign({}, this.headers, { 'Content-Type': 'application/x-www-form-urlencoded' }, extra_headers);
+        const headers = Object.assign({}, this.headers, { 'Content-Type': 'application/json' }, extra_headers);
         return await this.request({
             url,
             method: 'PUT',
@@ -16,7 +15,7 @@ class Request {
         });
     }
     async delete(url, data, extra_headers = {}) {
-        const headers = Object.assign({}, this.headers, { 'Content-Type': 'application/x-www-form-urlencoded' }, extra_headers);
+        const headers = Object.assign({}, this.headers, { 'Content-Type': 'application/json' }, extra_headers);
         return await this.request({
             url,
             method: 'DELETE',
@@ -34,7 +33,7 @@ class Request {
         });
     }
     async post(url, data, extra_headers = {}) {
-        const headers = Object.assign({}, this.headers, { 'Content-Type': 'application/x-www-form-urlencoded' }, extra_headers);
+        const headers = Object.assign({}, this.headers, { 'Content-Type': 'application/json' }, extra_headers);
         return await this.request({
             url,
             method: 'POST',
@@ -47,7 +46,7 @@ class Request {
         let url = this.base_url + '/' + (params.url || '');
         const method = params.method ? params.method.toUpperCase() : 'GET';
         const headers = (params.headers || {});
-        const body = (typeof FormData !== 'undefined' && params.data instanceof FormData) ? params.data : this.urlencode(params.data || {});
+        const body = params.data;
         
         try {
             const request = {
@@ -55,22 +54,18 @@ class Request {
                 headers
             };
 
-            if (params.data instanceof FormData) {
-                delete request.headers['Content-Type'];
-            }
-
             if (['POST', 'DELETE', 'PUT'].indexOf(method) !== -1) {
-                request.body = body;
+                request.body = JSON.stringify(body);
             }
 
             if (['GET'].indexOf(method) !== -1) {
-                url += '?' + this.urlencode(params.data || {});
+                url += '?' + this.urlEncode(params.data || {});
             }
 
             const response = await fetch(url, request);
             const data = await response.json();
 
-            if (data.error && !data.description) {
+            if (!response.ok) {
                 return Object.assign({}, data, { success: false, code: 422, error: '', description: data.error });
             }
 
@@ -81,7 +76,7 @@ class Request {
         }
 
     }
-    urlencode(properties) {
+    urlEncode(properties) {
         let formBody = [];
         for (const property in properties) {
             const encodedKey = encodeURIComponent(property);

@@ -33,7 +33,7 @@ class Event extends Component {
                                     type="text"
                                     placeholder="Enter the event title"
                                     value={this.props.state.event.title}
-                                    onChange={(event) => this.props.handleChangeEvent(event, "title")}
+                                    onChange={(event) => this.props.handleChange(event, "title")}
                                 />
                             </FormGroup>
                             <ControlLabel>Description</ControlLabel>
@@ -42,7 +42,7 @@ class Event extends Component {
                                     type="text"
                                     placeholder="Enter the event description"
                                     value={this.props.state.event.description}
-                                    onChange={(event) => this.props.handleChangeEvent(event, "description")}
+                                    onChange={(event) => this.props.handleChange(event, "description")}
                                 />
                             </FormGroup>
                             <ControlLabel>Start</ControlLabel>
@@ -52,14 +52,14 @@ class Event extends Component {
                                     type="date"
                                     placeholder="Enter the event start date"
                                     value={this.formatDate(this.props.state.event.start)}
-                                    onChange={(event) => this.props.handleChangeEvent(event, "startDate")}
+                                    onChange={(event) => this.props.handleChange(event, "startDate")}
                                 />
                                 <FormControl
                                     className="col-time"
                                     type="time"
                                     placeholder="Enter the event start time"
                                     value={this.formatTime(this.props.state.event.start)}
-                                    onChange={(event) => this.props.handleChangeEvent(event, "startTime")}
+                                    onChange={(event) => this.props.handleChange(event, "startTime")}
                                 />
                             </FormGroup>
                             <ControlLabel>End</ControlLabel>
@@ -69,28 +69,31 @@ class Event extends Component {
                                     type="date"
                                     placeholder="Enter the event end date"
                                     value={this.formatDate(this.props.state.event.end)}
-                                    onChange={(event) => this.props.handleChangeEvent(event, "endDate")}
+                                    onChange={(event) => this.props.handleChange(event, "endDate")}
                                 />
                                 <FormControl
                                     className="col-time"
                                     type="time"
                                     placeholder="Enter the event end time"
                                     value={this.formatTime(this.props.state.event.end)}
-                                    onChange={(event) => this.props.handleChangeEvent(event, "endTime")}
+                                    onChange={(event) => this.props.handleChange(event, "endTime")}
                                 />
                             </FormGroup>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {!IS_CREATE && <Button className="pull-left" bsStyle="danger" onClick={this.props.handleTriggerModalEvent}>
+                        {!IS_CREATE && <Button className="pull-left" bsStyle="danger" onClick={this.props.handleDeleteEvent}>
                             Delete
                         </Button>}
                         <Button className="" onClick={this.props.handleTriggerModalEvent}>
                             Close
                         </Button>
-                        <Button className="create-event-modal" onClick={this.props.handleTriggerModalEvent}>
+                        {IS_CREATE && <Button className="create-event-modal" onClick={this.props.handleCreateEvent}>
                             Create
-                        </Button>
+                        </Button>}
+                        {!IS_CREATE && <Button className="create-event-modal" onClick={this.props.handleEditEvent}>
+                            Edit
+                        </Button>}
                     </Modal.Footer>
                 </Modal>
             </div>

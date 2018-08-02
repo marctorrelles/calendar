@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 const EventActions = Reflux.createActions([
     'get',
     'create',
-    'put',
+    'edit',
     'delete'
 ]);
 
