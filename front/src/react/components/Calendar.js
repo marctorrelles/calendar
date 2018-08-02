@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import Event from "./Event";
 import { Navigator, WeekDays, CalendarDays } from "./CalendarComponents";
+
 import { makeCalendar, handleDateTime, checkEventParams } from '../utils/CalendarUtils';
 
 import EventActions from '../actions/EventActions';
