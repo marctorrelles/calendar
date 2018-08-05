@@ -1,4 +1,4 @@
-# quipu_test
+
 To run the api you will need several dependencies installes on your computer: sqlite3, ruby and rails. When installed, on the project root folder, execute:
 ```
 cd api
